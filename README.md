@@ -9,8 +9,21 @@ Using pycaret model outcomes to aid in building an skLearn model for analyzing A
 * [pandas](https://pandas.pydata.org/)
 * [seaborn](https://scikit-learn.org/stable/index.html)
 * [Yellowbrick](https://www.scikit-yb.org/en/latest/)
-
+# Data
+The information utilized in the project was the data preprocessed by pycaret.
+```
+data = pd.read_csv('C:/Users/piett/Intro Pycaret/Pycaret3/data/euBnB_transformed.csv')
+print(data.shape)
+data
+```
 # Data setup
+Excluding data to be utilized as unseen data for making predictions. 
+```
+data_unseen = data.sample(frac=0.1)
+data = data.drop(data_unseen.index)
+print(f'Data for model: {data.shape}, \nData for unseen predicitions: {data_unseen.shape}')
+data_unseen.to_csv('C:/Users/piett/Intro Pycaret/Pycaret3/data/euBnB_unseenX.csv', index=False)
+```
 
 The main setup required was to set X and y values.
 ```
@@ -18,11 +31,18 @@ X = data.drop(['cost per night cad'], axis= 1)
 y = data['cost per night cad']
 ```
 # Model testing
-Coming from pycaret the following model was used
+The subsequent model employed was derived from pycaret.
 
 <img src="https://github.com/Piettro314/Prediction-with-Pycaret/blob/main/media%20content/HyperParameters.png" align="center">
 
-The following code was ran:
+----
+
+Take note that an error may arise when copying any model hyperparameters from pycaret, but this can be resolved by merely eliminating the 'nan' value.
+
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/nan%20error.png" align="center">
+
+
+The subsequent code was executed to assess the models:
 
 ```
 %%time
@@ -77,5 +97,30 @@ def score_model(X, y, estimator, **kwargs):
 for model in models:
     score_model(X, y, model)
 ```
-What the above code accomplishes is to do a train test split against the selected model giving R_sq and MAE score. Hyper parameters were adjusted until a desirable R_sq and MAE was achieved
+The purpose of the aforementioned code is to perform a train-test split on the chosen model and to obtain its R-squared and mean absolute error (MAE) scores. Hyperparameters were tuned until a satisfactory R-squared and MAE were attained.
 
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/resultsAfterIterations.png" align="center">
+
+# Visualizations
+Results from model then observed using the following charts.
+
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/feature%20importance%20sk.png" align="center">
+
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/Residual%20sk.png" align="center">
+
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/Prediction%20Error.png" align="center">
+
+# Predict the model
+Evaluating the model's performance by testing it against unseen data.
+
+```
+pred = model.predict(X=data_to_pred)
+pred
+
+pred_results = data_unseen.loc[:,['cost per night cad']]
+pred_results['y_pred'] = pred
+pred_results['Percent Diff'] = (pred_results['cost per night cad']-pred_results['y_pred'])/pred_results['cost per night cad']
+pred_results
+```
+
+<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/results%20against%20Unseen.png" align="center">
