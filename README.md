@@ -123,6 +123,6 @@ pred_results['Percent Diff'] = (pred_results['cost per night cad']-pred_results[
 pred_results
 ```
 
-<img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/results%20against%20Unseen.png" align="center">
+<a href="https://github.com/Piettro314/Prediction-with-skLearn"><img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/results%20against%20Unseen.png" align="center" /></a>
 
 Upon analyzing the outcome, it was noted that the mean discrepancy between the projected and actual cost, when compared to unseen data, was -1.05%.
