@@ -124,3 +124,5 @@ pred_results
 ```
 
 <img src="https://github.com/Piettro314/Prediction-with-skLearn/blob/main/media%20content/results%20against%20Unseen.png" align="center">
+
+Upon analyzing the outcome, it was noted that the mean discrepancy between the projected and actual cost, when compared to unseen data, was -1.05%.
